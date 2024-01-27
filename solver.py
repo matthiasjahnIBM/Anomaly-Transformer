@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
+import pandas as pd
 import os
 import time
 from utils.utils import *
@@ -327,11 +328,15 @@ class Solver(object):
         test_labels = np.concatenate(test_labels, axis=0).reshape(-1)
         test_energy = np.array(attens_energy)
         test_labels = np.array(test_labels)
+        
+      
 
         pred = (test_energy > thresh).astype(int)
 
         gt = test_labels.astype(int)
 
+
+       
         print("pred:   ", pred.shape)
         print("gt:     ", gt.shape)
 
@@ -359,6 +364,14 @@ class Solver(object):
 
         pred = np.array(pred)
         gt = np.array(gt)
+
+        ##################################################################################################################
+        temp_pred_df = pd.DataFrame(pred)
+        temp_pred_df.to_csv('./dataset/PSM/temp_pred.csv')
+
+        temp_gt_df = pd.DataFrame(gt)
+        temp_gt_df.to_csv('./dataset/PSM/temp_gt.csv')
+        ##################################################################################################################
         print("pred: ", pred.shape)
         print("gt:   ", gt.shape)
 
